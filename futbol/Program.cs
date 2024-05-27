@@ -12,7 +12,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                     c.LoginPath = "/Account/Login";
                     c.LogoutPath = "/Account/Logout";
                     c.AccessDeniedPath = "/Account/AccessDenied";
-                    c.ExpireTimeSpan = TimeSpan.FromSeconds(120);
+                    c.ExpireTimeSpan = TimeSpan.FromSeconds(1200);
                 });
 
 var app = builder.Build();
@@ -31,9 +31,24 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+/*
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");*/
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}",
+      defaults: new { area = "" }
+    );
+
+    endpoints.MapDefaultControllerRoute();
+
+
+});
 
 app.Run();

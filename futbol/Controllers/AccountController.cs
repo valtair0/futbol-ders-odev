@@ -33,6 +33,8 @@ namespace futbol.Controllers
 
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name,user.Username),
+                new Claim("UserId",user.Id.ToString()),
+
             };
 
             var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
